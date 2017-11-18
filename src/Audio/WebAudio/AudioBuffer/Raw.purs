@@ -1,6 +1,6 @@
 module Audio.WebAudio.AudioBuffer.Raw (
-  mkAudioBuffer
---TODO:, unsafeCopyFromChannel
+  AudioBufferOptions
+, mkAudioBuffer
 ) where
 
 import Audio.WebAudio.Types (AudioBuffer)
