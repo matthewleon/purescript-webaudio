@@ -12,10 +12,10 @@ import Audio.WebAudio.AudioBuffer.Raw as Raw
 import Audio.WebAudio.Types (AudioBuffer)
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Exception (Error)
+import Control.Monad.Eff.Uncurried (EffFn5, EffFn6, runEffFn5, runEffFn6)
 import Control.Monad.ST (ST)
 import Data.ArrayBuffer.Types (Float32Array)
 import Data.Either (Either)
-import Data.Function.Uncurried (Fn5, Fn6, runFn5, runFn6)
 import Data.Maybe (Maybe(..))
 import Unsafe.Coerce (unsafeCoerce)
 
@@ -36,7 +36,7 @@ copyToChannel
    -> Float32Array
    -> Int
    -> Eff (st :: ST h | r) (Maybe Error)
-copyToChannel = runFn5 copyToChannelImpl Just Nothing
+copyToChannel = runEffFn5 copyToChannelImpl Just Nothing
 
 copyToChannelWithOffset
   :: forall h r
@@ -45,23 +45,25 @@ copyToChannelWithOffset
    -> Int
    -> Int
    -> Eff (st :: ST h | r) (Maybe Error)
-copyToChannelWithOffset = runFn6 copyToChannelWithOffsetImpl Just Nothing
+copyToChannelWithOffset = runEffFn6 copyToChannelWithOffsetImpl Just Nothing
 
 foreign import copyToChannelImpl
   :: forall h r
-   . Fn5 (Error -> Maybe Error)
-         (Maybe Error)
-         (STAudioBuffer h)
-         Float32Array
-         Int
-         (Eff (st :: ST h | r) (Maybe Error))
+   . EffFn5 (st :: ST h | r)
+            (Error -> Maybe Error)
+            (Maybe Error)
+            (STAudioBuffer h)
+            Float32Array
+            Int
+            (Maybe Error)
 
 foreign import copyToChannelWithOffsetImpl
   :: forall h r
-   . Fn6 (Error -> Maybe Error)
-         (Maybe Error)
-         (STAudioBuffer h)
-         Float32Array
-         Int
-         Int
-         (Eff (st :: ST h | r) (Maybe Error))
+   . EffFn6 (st :: ST h | r)
+            (Error -> Maybe Error)
+            (Maybe Error)
+            (STAudioBuffer h)
+            Float32Array
+            Int
+            Int
+            (Maybe Error)
