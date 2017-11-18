@@ -1,10 +1,10 @@
 module Audio.WebAudio.AudioBuffer (
+--  mkAudioBuffer
   sampleRate
 , length
 , duration
 , numberOfChannels
 , getChannelData
---TODO: , copyFromChannel
 --TODO: , copyToChannel
 , module Audio.WebAudio.Types
 ) where
@@ -13,6 +13,8 @@ import Audio.WebAudio.Types (AudioBuffer)
 import Data.ArrayBuffer.Types (Float32Array)
 import Data.Function.Uncurried (Fn4, runFn4)
 import Data.Maybe (Maybe(..))
+
+--mkAudioBuffer :: Data -> AudioBuffer
 
 foreign import sampleRate :: AudioBuffer -> Number
 
