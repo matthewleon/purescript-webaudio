@@ -24,7 +24,7 @@
     "purescript-tuples": "^4.1.0",
     "purescript-strings": "^3.3.1",
     "purescript-eff": "^3.1.0",
-    "purescript-arraybuffer-types": "^2.0.0",
+    "purescript-arraybuffer-safe": "matthewleon/purescript-arraybuffer-safe",
     "purescript-functions": "^3.0.0"
   },
   "devDependencies": {

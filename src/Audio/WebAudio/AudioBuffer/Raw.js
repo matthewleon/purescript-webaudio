@@ -1,4 +1,4 @@
-"use strict";
+"use strict"; 
 
 exports.mkAudioBufferImpl = function (left, right, options) {
   try {

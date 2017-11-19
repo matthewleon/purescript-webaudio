@@ -15,8 +15,7 @@ import Control.Monad.Eff.Exception (Error)
 import Control.Monad.Eff.Uncurried (EffFn5, EffFn6, runEffFn5, runEffFn6)
 import Control.Monad.ST (ST)
 import Data.ArrayBuffer.Types (Float32Array)
-import Data.Either (Either)
-import Data.Maybe (Maybe(..))
+import Data.Either (Either(..))
 import Unsafe.Coerce (unsafeCoerce)
 
 foreign import data STAudioBuffer :: Type -> Type
@@ -35,8 +34,8 @@ copyToChannel
    . (STAudioBuffer h)
    -> Float32Array
    -> Int
-   -> Eff (st :: ST h | r) (Maybe Error)
-copyToChannel = runEffFn5 copyToChannelImpl Just Nothing
+   -> Eff (st :: ST h | r) (Either Error Unit)
+copyToChannel = runEffFn5 copyToChannelImpl Left (Right unit)
 
 copyToChannelWithOffset
   :: forall h r
@@ -44,26 +43,26 @@ copyToChannelWithOffset
    -> Float32Array
    -> Int
    -> Int
-   -> Eff (st :: ST h | r) (Maybe Error)
-copyToChannelWithOffset = runEffFn6 copyToChannelWithOffsetImpl Just Nothing
+   -> Eff (st :: ST h | r) (Either Error Unit)
+copyToChannelWithOffset = runEffFn6 copyToChannelWithOffsetImpl Left (Right unit)
 
 foreign import copyToChannelImpl
   :: forall h r
    . EffFn5 (st :: ST h | r)
-            (Error -> Maybe Error)
-            (Maybe Error)
+            (Error -> Either Error Unit)
+            (Either Error Unit)
             (STAudioBuffer h)
             Float32Array
             Int
-            (Maybe Error)
+            (Either Error Unit)
 
 foreign import copyToChannelWithOffsetImpl
   :: forall h r
    . EffFn6 (st :: ST h | r)
-            (Error -> Maybe Error)
-            (Maybe Error)
+            (Error -> Either Error Unit)
+            (Either Error Unit)
             (STAudioBuffer h)
             Float32Array
             Int
             Int
-            (Maybe Error)
+            (Either Error Unit)
